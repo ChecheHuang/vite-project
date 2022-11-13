@@ -1,0 +1,10 @@
+ $color: lightgray;
+
+ body {
+     user-select: none;
+     background-color: $color;
+ }
+
+ img {
+     -webkit-user-drag: none;
+ }
