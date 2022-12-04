@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styles from "./login.module.scss";
 import "./login.scss";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
+import { useNavigate } from "react-router-dom";
 function Login() {
+  const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const userNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -11,9 +13,12 @@ function Login() {
   const passwordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const handleLogin = ()=>{
-    console.log(userName,password)
-  }
+  const handleLogin = () => {
+    localStorage.setItem("demoToken", "12345");
+    console.log(userName, password);
+    navigate("/page1");
+    message.success("登入成功");
+  };
   return (
     <div className={styles.loginPage}>
       <div className={styles.loginBox + " loginBox"}>
