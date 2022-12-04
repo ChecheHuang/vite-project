@@ -79,31 +79,57 @@
    參考router/index copy.tsx並直接在main.tsx引用
    2. 組件形寫法
    參考router/index.tsx並在main.tsx用BrowserRouter包起來，App使用useRoutes包起來放在組件內
-   3. 路由懶加載
+   3. 路由懶加載與嵌套路由
    ```typescript = 
+   //router/index.tsx
    import React, { lazy } from "react";
    import Home from "../views/Home";
    import { Navigate } from "react-router-dom";
-   const About = lazy(() => import("../views/About"));
-   const User = lazy(() => import("../views/User"));
+   const Page1 = lazy(() => import("../views/Page1"));
+   const Page2 = lazy(() => import("../views/Page2"));
 
    const withLoadingComponent = (comp: JSX.Element) => (
    <React.Suspense fallback={<div>Loading</div>}>{comp}</React.Suspense>
    );
 
    const routes = [
-   { path: "/", element: <Navigate to="/home" /> },
-   { path: "/home", element: <Home /> },
+   { path: "/", element: <Navigate to="/page1" /> },
    {
-      path: "/about",
-      element: withLoadingComponent(<About />),
-   },
-   {
-      path: "/user",
-      element: withLoadingComponent(<User />),
+      path: "/",
+      element: <Home />,
+      children: [
+         {
+         path: "/page1",
+         element: withLoadingComponent(<Page1 />),
+         },
+         {
+         path: "/page2",
+         element: withLoadingComponent(<Page2 />),
+         },
+      ],
    },
    ];
    export default routes;
 
    ```
+   ```typescript =
+   //views/Home.tsx
+   import {Outlet}from "react-router-dom"
+   const { Header, Content, Footer, Sider } = Layout;
+   const View: React.FC = () => {
+   return (
+      <Layout>
+         <Sider/>
+         <Header/>
+         <Content>
+            //router內的element會在Outlet內
+            <Outlet/>
+         </Content>
+         <Footer/>
+      </Layout>
+   };
+   export default View;
+   ```
+
+
 
