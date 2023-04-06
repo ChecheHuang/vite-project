@@ -11,7 +11,7 @@ export default {
     },
   },
   asyncActions: {
-      asyncAdd1(dispatch:Function){
+      asyncAdd1(dispatch:Function):void{
       setTimeout(()=>{
         dispatch({ type: "add1" });
       },1000)

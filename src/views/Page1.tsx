@@ -15,7 +15,7 @@ function Page1() {
     //   }, 1000);
     // });
 
-    dispatch(numStatus.asyncActions.asyncAdd1);
+    // dispatch(numStatus.asyncActions.asyncAdd1);
   };
 
   const changeArr = () => {
